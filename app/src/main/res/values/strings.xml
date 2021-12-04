@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">My_Yuka</string>
+    <string name="testConnexion">connexion!!</string>
+    <string name="header_text">Obtenez des informations sur les produits alimentaire</string>
+    <string name="appTitle_texr">My Yuka!</string>
+    <string name="hintTextEditField">code du produit</string>
+    <string name="scannerButtonText">Scanner</string>
+    <string name="allergeneListTitle">Liste des allergènes:</string>
+    <string name="productImageContentDescription">image du produit</string>
+    <string name="nutriscoreImageContentDescription">image du nutriscore</string>
+    <string name="novaCodeImageContentDescription">Code nova</string>
+    <string name="palmOilImageContentDescription">image huile de palme</string>
+</resources>
