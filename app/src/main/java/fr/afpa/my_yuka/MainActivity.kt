@@ -27,19 +27,19 @@ import android.text.method.ScrollingMovementMethod
 
 class MainActivity : AppCompatActivity() {
 
-    var clientAPI = IOpenFoodFactsClientAPI()
-    var imageAnalizer = ImageAnalyzer()
-    lateinit var ingredientsTextView: TextView
-    lateinit var productImageView: ImageView
-    lateinit var novaGroupView: ImageView
-    lateinit var nutriscoreView : ImageView
-    lateinit var palmOilView : ImageView
-    lateinit var countriesView : TextView
-    lateinit var manufactureView : TextView
-    lateinit var manufacturePlacesView : TextView
-    lateinit var allergenesView: TextView
-    lateinit var textInputView: TextView
-    val REQUEST_IMAGE_CAPTURE = 1
+    private var clientAPI = IOpenFoodFactsClientAPI()
+    private var imageAnalizer = ImageAnalyzer()
+    private lateinit var ingredientsTextView: TextView
+    private lateinit var productImageView: ImageView
+    private lateinit var novaGroupView: ImageView
+    private lateinit var nutriscoreView : ImageView
+    private lateinit var palmOilView : ImageView
+    private lateinit var countriesView : TextView
+    private lateinit var manufactureView : TextView
+    private lateinit var manufacturePlacesView : TextView
+    private lateinit var allergensView: TextView
+    private lateinit var textInputView: TextView
+    private val REQUEST_IMAGE_CAPTURE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,14 +61,14 @@ class MainActivity : AppCompatActivity() {
         manufacturePlacesView=findViewById(R.id.manufacturing_places_text)
         countriesView=findViewById(R.id.countries_text)
         manufactureView=findViewById(R.id.manufacturer_text)
-        allergenesView=findViewById(R.id.allergenes_liste_text)
+        allergensView=findViewById(R.id.allergenes_liste_text)
         textInputView = findViewById<TextInputEditText>(R.id.textInput)
 
-        //Activ the scrollbar of the textView "ingredient_text"
+        //Activation of the scrollbar of the textView "ingredient_text"
         ingredientsTextView.movementMethod = ScrollingMovementMethod()
     }
 
-    fun onClickScanner() {
+    private fun onClickScanner() {
         imageAnalizer.resetRawValue()
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onClickResearch()
+    private fun onClickResearch()
     {
         getProduct(textInputView.text.toString())
     }
@@ -118,27 +118,22 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun displayNoResult() {
+    private fun displayNoResult() {
         productImageView.setImageDrawable(null)
         ingredientsTextView.text = ""
-        allergenesView.text = ""
+        allergensView.text = ""
         novaGroupView.setImageDrawable(null)
         nutriscoreView.setImageDrawable(null)
         palmOilView.setImageDrawable(null)
-        var countries = "Pays d'origine: "
-        countriesView.text = countries
-        var places = "Lieu(x) de fabrication: "
-        manufacturePlacesView.text = places
-
-        //Display manufacturer
-        var manufacturers="Fabricant(s): "
-        manufactureView.text = manufacturers
+        countriesView.text = getString(R.string.originCountryTitle)
+        manufacturePlacesView.text = getString(R.string.placeMadeInTitle)
+        manufactureView.text = getString(R.string.makerNameTitle)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     fun displayProduct(jsonObject: JsonObject)
     {
-        if(jsonObject.product==null) {
+        if(jsonObject.product.generic_name.isEmpty()) {
             displayNoResult()
             return
         }
@@ -153,15 +148,14 @@ class MainActivity : AppCompatActivity() {
         var allergensString = ""
 
         for(string in jsonObject.product.allergens_tags) {
-            var resultString=""
-            if(string[2]==':')
-                resultString = string.slice(3 until string.length)
-            else resultString = string
+            var resultString = if(string[2]==':')
+                string.slice(3 until string.length)
+            else string
 
-            allergensString += resultString + " / "
+            allergensString += "$resultString / "
         }
         allergensString = allergensString.slice(0 until allergensString.length-3)
-        allergenesView.text = allergensString
+        allergensView.text = allergensString
 
         //Display nova group image
         novaGroupView.setImageResource(R.drawable.nova1)

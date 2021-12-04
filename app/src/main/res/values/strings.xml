@@ -10,4 +10,7 @@
     <string name="nutriscoreImageContentDescription">image du nutriscore</string>
     <string name="novaCodeImageContentDescription">Code nova</string>
     <string name="palmOilImageContentDescription">image huile de palme</string>
+    <string name="originCountryTitle">\"Pays d\'origine: \"</string>
+    <string name="placeMadeInTitle">\"Lieu(x) de fabrication: \"</string>
+    <string name="makerNameTitle">\"Fabricant(s): \"</string>
 </resources>
